@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lezione22.h"
+#include "esercizio1.h"
 
 /*
 Opzione ‘media’: il programma deve fornire il voto medio degli
@@ -95,21 +95,21 @@ int printFile (const char* nomeFile){
     FILE * registro = fopen (nomeFile, "r");
     if (registro == NULL){
         fprintf(stderr, "Problema nell'apertura del file '%s'\n", nomeFile);
-        return 0;
+        return 1;
     }
 
     unsigned int matricola=0, voto=0, numStudenti=0;
 
     if (fscanf (registro, " %u", &numStudenti)==0){
         fprintf(stderr, "Errore nella lettura dei dati dal file.");
-        return 0;
+        return 1;
     }
     printf("ci sono %u studenti.\n", numStudenti);
 
     while (feof(registro)==0){
         if (fscanf(registro, " %u %u", &matricola, &voto) == 0){
             fprintf(stderr, "Errore nella lettura dei dati dal file.");
-            return 0;
+            return 1;
         }
         else {
             printf("La matricola %u ha voto %u\n", matricola, voto);
@@ -117,10 +117,10 @@ int printFile (const char* nomeFile){
     }
 
     if (fclose (registro)==0){
-        return 1;
+        return 0;
     }
     else {
         fprintf(stderr, "Errore nella chiusura del file '%s'\n", nomeFile);
-        return 0;
+        return 2;
     }
 }

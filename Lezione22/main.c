@@ -18,7 +18,7 @@ superato l’esame.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "lezione22.h"
+#include "esercizio1.c"
 
 int main (){
     const char* nomeFile = "registro.txt";
