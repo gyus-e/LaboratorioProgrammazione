@@ -88,8 +88,13 @@ int Esercizio1 (){
                     return 1;
                 }
             
-                setVoto(nomeFile, matricola, voto);
-                break;
+                if (setVoto(nomeFile, matricola, voto)<0){
+                    decreaseNumStudenti(nomeFile);
+                    break;
+                }
+                else
+                    break;
+                
 
             default:
                 return 0;
