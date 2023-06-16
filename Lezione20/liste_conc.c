@@ -81,4 +81,5 @@ void distruggiLista (lista l){
             free(temp);
         }
     }
+    return;
 }
