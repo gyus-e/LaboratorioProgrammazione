@@ -48,7 +48,9 @@ segnalando però un errore nel caso in cui lo studente abbia già
 superato l’esame.
 */
 
-//setVoto restituisce 0 se il file non viene modificato, 1 se viene modificato con successo, -1 se le modifiche non sono corrette (il numero di studenti viene incrementato senza aggiungere matricola e voto del nuovo studente)
+//setVoto restituisce 0 se il file non viene modificato, 
+//1 se viene modificato con successo, 
+//-1 se le modifiche non sono corrette (il numero di studenti viene incrementato senza aggiungere matricola e voto del nuovo studente)
 int setVoto (const char * nomeFile, unsigned int newMatricola, unsigned int newVoto){
     FILE * registro = fopen (nomeFile, "r+");
     if (registro == NULL){
@@ -88,22 +90,32 @@ int setVoto (const char * nomeFile, unsigned int newMatricola, unsigned int newV
         return 1;
 }
 
-//questa funzione viene chiamata se setVoto restituisce -1 (cioé se il numero di studenti è stato incrementato senza aggiungere i dati di un nuovo studente)
+//decreaseNumStudenti viene chiamata se setVoto restituisce -1
+//(cioé se il numero di studenti è stato incrementato senza aggiungere i dati di un nuovo studente)
+//restituisce -1 se il file non viene modificato, 
+//0 se viene modificato con successo ma ci sono problemi alla chiusura,
+//1 per una corretta esecuzione.
 int decreaseNumStudenti (const char * nomeFile){
     FILE * registro = fopen (nomeFile, "r+");
     if (registro == NULL){
         fprintf(stderr, "Problema nell'apertura del file '%s'\n", nomeFile);
-        return 0;
+        return -1;
     }
     unsigned int numStudenti = 0;
     if (fscanf(registro, " %u", &numStudenti)==0){
         fprintf(stderr, "Errore nella lettura dei dati dal file.");
-        return 0;
+        return -1;
     }
     else {
         numStudenti--;
         fprintf(registro, " %u", numStudenti);
     }
+
+    if (fclose (registro)!=0){
+        fprintf(stderr, "Errore nella chiusura del file '%s'\n", nomeFile);
+        return 0;
+    }
+    else 
     return 1;
 }
 
