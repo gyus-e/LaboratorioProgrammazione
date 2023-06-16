@@ -18,8 +18,8 @@ superato l’esame.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "esercizio1.c"
-#include "esercizio3.c"
+#include "esercizio1.h"
+#include "esercizio3.h"
 
 int Esercizio1();
 int Esercizio3();
