@@ -19,8 +19,36 @@ superato l’esame.
 #include <stdio.h>
 #include <stdlib.h>
 #include "esercizio1.c"
+#include "esercizio3.c"
+
+int Esercizio1();
+int Esercizio3();
 
 int main (){
+    int Esercizio = 0;
+    printf("Digitare il numero dell'esercizio da svolgere: ");
+    if (scanf (" %d", &Esercizio)!=1){
+        fprintf(stderr, "Errore di input.\n");
+        return 1;
+    }
+    switch (Esercizio) {
+        
+        case 1:
+        return Esercizio1();
+        break;
+
+        case 3:
+        return Esercizio3();
+        break;
+
+        default:
+        printf("L'esercizio non esiste o non e' stato svolto.\n");
+        return 0;
+        break;
+    }
+}
+
+int Esercizio1 (){
     const char* nomeFile = "registro.txt";
 
     unsigned int opzioni = 0;
@@ -67,4 +95,41 @@ int main (){
                 return 0;
         }
     }
+}
+
+
+
+
+int Esercizio3 (){
+    unsigned int giorno=0, mese=0, t0=0, t1=0;
+
+    printf("Inserire giorno e mese: ");
+    if (scanf (" %u", &giorno) && scanf (" %u", &mese)!=1){
+        fprintf(stderr, "Errore di input.\n");
+        return 1;
+    }
+    if (giorno<=0 || giorno > 31 || mese <= 0 || mese > 12){
+        fprintf(stderr, "Errore: inserire una data valida.\n");
+        return 1;
+    }
+
+    printf("Inserire fascia oraria: ");
+    if (scanf (" %u", &t0) && scanf (" %u", &t1) !=1){
+        fprintf (stderr, "Errore di input.\n");
+        return 1;
+    }
+    if (t1 < t0){
+        fprintf (stderr, "Errore: inserire gli orari in ordine cronologico.\n");
+        return 1;
+    }
+    if ((t1 < 0) || (t0 > 24) || (t1 < 0) || (t1 > 24)){
+        fprintf (stderr, "Errore: inserire un orario valido.\n");
+        return 1;
+    }
+
+    struct descrizioni * appointments = controllaAppuntamenti(giorno, mese, t0, t1);
+    
+    stampaLista(appointments);
+    distruggiLista(appointments);
+    return 0;
 }
