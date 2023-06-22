@@ -73,20 +73,13 @@ int setVoto (const char * nomeFile, unsigned int newMatricola, unsigned int newV
 
     fprintf(registro, "\n%u %u", newMatricola, newVoto);
     numStudenti++;
-    
+    fseek(registro, 0, SEEK_SET);
+    fprintf(registro, "%u", numStudenti);
+
     if (fclose (registro)!=0){
         fprintf(stderr, "Errore nella chiusura del file '%s'\n", nomeFile);
         return 0;
     }
-
-    FILE * posNumStudenti = fopen (nomeFile, "r+");
-    fprintf(posNumStudenti, "%u", numStudenti);
-    if (fclose (posNumStudenti)!=0){
-        fprintf(stderr, "Errore nella chiusura del file '%s'\n", nomeFile);
-        return 0;
-    }
-    else 
-        return 1;
 }
 
 
